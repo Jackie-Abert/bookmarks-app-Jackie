@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bookmarks</title>
+
 </head>
 <body>
     <header>
@@ -12,17 +13,21 @@
     </header>
     <main>
         <form>
-            <button type ="submit" id="newBookmark">New</button>
-            <button type="submit" id="filter">Filter by</button>
+            <button type ="button" id="newBookmark">New</button>
+            <select class="ui dropdown">
+                <option value="">Rating</option>
+                <option value="1">5 Stars</option>
+                <option value="0">4 Stars</option>
+                <option value="0">3 Stars</option>
+                <option value="0">2 Stars</option>
+                <option value="0">1 Star</option>
+              </select>
         </form>
         <div class="container">
-            <ul>
+            <ul id="bookmark-list">
 
             </ul>
         </div>
     </main>
-    <footer>
-        <form id="text-update"></form>
-    </footer>
 </body>
 </html>

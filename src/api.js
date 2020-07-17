@@ -1,42 +1,71 @@
-//function fetchBookmark() {
-//     const BASE_URL = `https://thinkful-list-api.herokuapp.com/${user}/bookmarks`;
-//     fetch(BASE_URL)
-//     .then(res => {
-//         return res.json();
-//     })
-//     .then()
-//     .catch(error => alert('something went wrong.'));
-//   }
+'use strict';
 
+import 'normalize.css';
+import './index.css';
 
-//function getBookmark() {
-//     return fetchBookmark(`${BASE_URL}/bookmarks`);
-// };
+const BASE_URL = 'https://thinkful-list-api.herokuapp.com/jackie/bookmarks';
 
-//function createBookmark() {
+const listApiFetch = function(...args) {
+  let error;
+  return fetch(...args)
+    .then(res => {
+      if (!res.ok) {
+        error = { code: res.status };
+        if (!res.headers.get('content-type').includes('json')) {
+          error.message = res.statusText;
+          return Promise.reject(error);
+        }
+      }
+      return res.json();
+    })
+    .then(data => {
+      if (error) {
+        error.message = data.message;
+        return Promise.reject(error);
+      }
+      return data;
+    });
+};
 
+// GET
+function getBookmarks(){
+  return listApiFetch(`${BASE_URL}/bookmarks`);
 }
 
-//function updateBookmark(id, updateData) {
-// const newData = JSON.stringify(updateData);
-//   return fetchBookmark(`${BASE_URL}/bookmarks/${id}`, {
-//     method: 'PATCH',
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//     body: newData
-//   });
-// };
-// //function deleteBookmark(id) {
-//         return fetchBookmark(BASE_URL + '/bookmarks/' + id, {
-//           method: 'DELETE'
-//         });
-//       };
-// }
+// POST
+function addBookmark(object){
+  const newItem = JSON.stringify(object);
+  return listApiFetch(`${BASE_URL}/bookmarks`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: newItem
+  });
+}
 
-// export default {
-//     getBookmark,
-//     createBookmark,
-//     updateBookmark,
-//     deleteBookmark
-//   };
+// PATCH
+function editBookmark(id, updateData){
+  const newData = JSON.stringify(updateData);
+  return listApiFetch(`${BASE_URL}/bookmarks/${id}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: newData
+  });
+}
+
+// DELETE
+  function deleteBookmark(id){
+  return fetch(`${BASE_URL}/bookmarks/${id}`, {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+    body: ''
+  });
+};
+
+
+export default {
+  BASE_URL,
+  getBookmarks,
+  addBookmark,
+  editBookmark,
+  deleteBookmark
+}
