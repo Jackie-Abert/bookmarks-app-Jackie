@@ -5,11 +5,11 @@
   };
 
   const findById = function(id){
-    return this.bookmark.find(bookmark => bookmark.id === id);
+    return this.bookmarks.find(bookmark => bookmark.id === id);
   };
   
   const addBookmark = function(bookmark){
-    this.bookmark.push(bookmark);
+    this.bookmarks.push(bookmark);
   };
 
   const findAndUpdate = function(id, newData){
@@ -18,10 +18,12 @@
   };
 
   const findAndDelete = function(id){
-    this.bookmark = this.bookmark.filter(bookmark => bookmark.id !== id);
+    this.bookmarks = this.bookmarks.filter(bookmark => bookmark.id !== id);
   };
 
   export default {
+    
+    bookmarks: [],
     setError,
     findById,
     addBookmark,

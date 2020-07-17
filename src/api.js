@@ -3,7 +3,7 @@
 import 'normalize.css';
 import './index.css';
 
-const BASE_URL = 'https://thinkful-list-api.herokuapp.com/jackie/bookmarks';
+const BASE_URL = 'https://thinkful-list-api.herokuapp.com/jackie';
 
 const listApiFetch = function(...args) {
   let error;

@@ -4,6 +4,7 @@ import $ from 'jquery';
 import 'normalize.css';
 import './index.css';
 import store from './store';
+import api from './api';
 
   function generateError(message){
     return `
@@ -101,7 +102,7 @@ function render(){
   });
   
   // populate the 'ul' with html generated data
-  $('#bookmarks-list').html(generateBookmarksListString(bookmark));
+  $('#bookmarks-list').html(generateBookmarksListString(bookmarks));
 }
 
 function getItemIdFromElement(bookmark){
@@ -119,13 +120,13 @@ function handleNewPageSubmit() {
 }
 
 function handleNewBookmarkSubmit(){
-  $('#text-update').submit(function(event){
+  $('main').on('submit', '#text-update', function(event){
     event.preventDefault();
     const values = {};
     values.title = $('#bookmark-title').val();
     values.url = $('#bookmark-url').val();
     values.description = $('#bookmark-description').val();
-    values.rating = $('#rating-input-1-5').val();
+    //values.rating = $('#rating-input-1-5').val();
     api.addBookmark(values)
       .then((newBookmark) => {
         store.addBookmark(newBookmark);
