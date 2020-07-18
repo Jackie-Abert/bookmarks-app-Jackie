@@ -25,9 +25,18 @@ import api from './api';
     return `
     <li>
       <div class ="divexpand">
-        <h1>${bookmark.title}</h1>
+          <div>
+            <div class="flexcontainer">
+              <div class="flexbox1">${bookmark.title}</div>
+              <div class="flexbox2">"rating here"</div>
+              <div class "flexbox3"><button type ="submit" id="edit">Edit</button>
+            </div>
+          </div>
         <div class="divcollapse">
-          <h2>Testing one two three</h2>
+          <h2>${bookmark.title}</h2>
+          <a data-id="${bookmark.id}" target="_blank" href="${bookmark.url}">Visit Site</a>
+          <p>${bookmark.description}</p>
+          <button type="button" class="btn btn-danger js-bookmark-delete" data-id="${bookmark.id}">Delete</button>
         </div>
       </div>
     </li> 
@@ -37,11 +46,7 @@ import api from './api';
     // return `
     // <li>
     //   <div class="divexpand">  
-    //     <div class="flexcontainer">
-    //       <div class="flexbox1">${bookmark.title}</div>
-    //       <div class="flexbox2">"rating here"</div>
-    //       <div class "flexbox3"><button type ="submit" id="edit">Edit</button>
-    //     </div>
+    
     //     <div class="divcollapse">
     //         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"</p>
     //     </div>
@@ -49,7 +54,9 @@ import api from './api';
 
     // </li>
     // `;
-//this creates a page to create a bookmark page
+
+
+    //this creates a page to create a bookmark page
 function generateBookmarkPage() {
     return `
         <div class="container">
