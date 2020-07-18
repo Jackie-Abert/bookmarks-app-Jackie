@@ -4,7 +4,7 @@ import 'normalize.css';
 import './index.css';
 
 const BASE_URL = 'https://thinkful-list-api.herokuapp.com/jackie';
-
+// if the post is working I am assuming this is working just fine as well
 const listApiFetch = function(...args) {
   let error;
   return fetch(...args)
@@ -32,7 +32,7 @@ function getBookmarks(){
   return listApiFetch(`${BASE_URL}/bookmarks`);
 }
 
-// POST
+// POST  this seems to be working just fine
 function addBookmark(object){
   const newItem = JSON.stringify(object);
   return listApiFetch(`${BASE_URL}/bookmarks`, {

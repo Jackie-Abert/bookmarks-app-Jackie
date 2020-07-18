@@ -14,36 +14,42 @@ import api from './api';
       </section>
     `;
   }
-
-  function generateBookmarksListString(bookmarksList){
-    const bookmarks = bookmarksList.map(bookmark => generateBookmarkElement(bookmark));
+//this puts all the crap together in a string for the dom to read
+  function generateBookmarksListString(bookmarkList){
+    const bookmarks = bookmarkList.map((bookmark) => generateBookmarkElement(bookmark));
     return bookmarks.join('');
   }
-
+//this creates the bookmark elements including the on click expand
   function generateBookmarkElement(bookmark){
+    console.log("generateBookmarkElement working")
     return `
     <li>
-      <div class="container" data-item-id="${bookmark.id}">
-        <div class="panel-heading" role="tab">
-            <h4 class="panel-title">
-                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#${bookmark.id}" aria-expanded="true" aria-controls="${bookmark.id}">
-                    ${bookmark.title}
-                  <span class="bookmark-rating">${(bookmark.rating)}</span>
-                </a>
-            </h4>
-        </div>
-        <div id="${bookmark.id}" class="panel-collapse collapse" role="tabpanel">
-          <div class="panel-body">
-            <p data-id="${bookmark.id}">${bookmark.description}</p>
-            <p><a data-id="${bookmark.id}" target="_blank" href="${bookmark.url}">Visit Site</a></p>
-            <button type="button" class="btn btn-danger bookmark-delete" data-id="${bookmark.id}">Delete</button>
-          </div>
+      <div class ="divexpand">
+        <h1>${bookmark.title}</h1>
+        <div class="divcollapse">
+          <h2>Testing one two three</h2>
         </div>
       </div>
-    </li>
-    `;
+    </li> 
+    `
   }
+   
+    // return `
+    // <li>
+    //   <div class="divexpand">  
+    //     <div class="flexcontainer">
+    //       <div class="flexbox1">${bookmark.title}</div>
+    //       <div class="flexbox2">"rating here"</div>
+    //       <div class "flexbox3"><button type ="submit" id="edit">Edit</button>
+    //     </div>
+    //     <div class="divcollapse">
+    //         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"</p>
+    //     </div>
+    //   </div>  
 
+    // </li>
+    // `;
+//this creates a page to create a bookmark page
 function generateBookmarkPage() {
     return `
         <div class="container">
@@ -75,8 +81,8 @@ function generateBookmarkPage() {
             </div>
           <form id="text-update">
             <button class "error-container" type ="submit" id="save">Save</button>
-            <button type="submit" id="cancel">Cancel</button>
-          </form>`
+            <button type="button" id="cancel">Cancel</button>
+             </form>`
 }
 
 function renderError(){
@@ -97,17 +103,12 @@ function closeError(){
 
 function render(){
   renderError();
-  let bookmarks = store.bookmarks.filter(bookmark => {
-    return bookmark.rating >= store.minimumRating;
-  });
-  
-  // populate the 'ul' with html generated data
-  $('#bookmarks-list').html(generateBookmarksListString(bookmarks));
+  $('.bookmark-list').append(generateBookmarksListString(store.bookmarks));
 }
 
-function getItemIdFromElement(bookmark){
-  return $(bookmark)
-    .closest('#bookmark-list')
+function getItemIdFromElement(bookmarks){
+  return $(bookmarks)
+    .closest('.bookmark-list')
     .data('item-id');
 }
 
@@ -118,7 +119,7 @@ function handleNewPageSubmit() {
     event.preventDefault();
   })
 }
-
+//this submits to the api don't mess with it
 function handleNewBookmarkSubmit(){
   $('main').on('submit', '#text-update', function(event){
     event.preventDefault();
@@ -126,22 +127,27 @@ function handleNewBookmarkSubmit(){
     values.title = $('#bookmark-title').val();
     values.url = $('#bookmark-url').val();
     values.description = $('#bookmark-description').val();
-    //values.rating = $('#rating-input-1-5').val();
     api.addBookmark(values)
       .then((newBookmark) => {
         store.addBookmark(newBookmark);
+        location.reload();
         render();
       })
       .catch((err) => {
         store.setError(err.message);
         renderError();
       });
-      console.log(values);
   });
 }
 
+function cnacelNewBookmarkSubmit() {
+  $('main').on('click', '#cancel', event => {
+    event.preventDefault();
+    location.reload();
+  })
+}
 function handleBookmarkDeleteClicked(){
-  $('.js-bookmarks-list').on('click', '.bookmark-delete', event => {
+  $('.bookmarks-list').on('click', '.bookmark-delete', event => {
     const id = getItemIdFromElement(event.currentTarget);
 
     api.deleteBookmark(id)
@@ -165,12 +171,20 @@ function handleMinimumRatingFilter(){
   });
 }
 
+function expandAccordionOnClick(){
+  $('main').on('click', '.divexpand', function(){
+    $(this).find('.divcollapse').slideToggle('slow');
+  })
+}
+
 function bindEventListeners(){
   closeError();
   handleNewPageSubmit();
   handleNewBookmarkSubmit();
   handleBookmarkDeleteClicked();
   handleMinimumRatingFilter();
+  cnacelNewBookmarkSubmit();
+  expandAccordionOnClick();
 }
 
 
