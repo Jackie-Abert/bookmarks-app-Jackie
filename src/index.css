@@ -29,6 +29,7 @@ html {
 .flexcontainer {
   display: flex;
   flex-direction: row;
+  justify-content: space-evenly;
 }
 .flexbox1 {
   flex: 1;
@@ -36,10 +37,6 @@ html {
 
 .flexbox2 {
   flex: 1;
-}
-
-.flexbox3 {
-  flex: 3;
 }
 
 header {

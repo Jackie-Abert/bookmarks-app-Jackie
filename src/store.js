@@ -18,12 +18,12 @@
   };
 
   const findAndDelete = function(id){
-    this.bookmarks = this.bookmarks.filter(bookmark => bookmark.id !== id);
+    this.bookmarks = this.bookmarks.filter(currentBookmark => currentBookmark.id !== id);
   };
 
   export default {
-    
     bookmarks: [],
+    minimumRating: 1,
     setError,
     findById,
     addBookmark,

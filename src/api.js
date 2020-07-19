@@ -55,9 +55,7 @@ function editBookmark(id, updateData){
 // DELETE
   function deleteBookmark(id){
   return fetch(`${BASE_URL}/bookmarks/${id}`, {
-    method: 'DELETE',
-    headers: { 'Content-Type': 'application/json' },
-    body: ''
+    method: 'DELETE'
   });
 };
 

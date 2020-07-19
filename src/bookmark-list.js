@@ -25,73 +25,55 @@ import api from './api';
     return `
     <li>
       <div class ="divexpand">
-          <div>
-            <div class="flexcontainer">
-              <div class="flexbox1">${bookmark.title}</div>
-              <div class="flexbox2">"rating here"</div>
-              <div class "flexbox3"><button type ="submit" id="edit">Edit</button>
-            </div>
+        <div>
+          <div class="flexcontainer">
+            <div class="flexbox1">${bookmark.title}</div>
+            <div class="flexbox2">${bookmark.rating}</div>
           </div>
+        </div>
         <div class="divcollapse">
           <h2>${bookmark.title}</h2>
           <a data-id="${bookmark.id}" target="_blank" href="${bookmark.url}">Visit Site</a>
-          <p>${bookmark.description}</p>
-          <button type="button" class="btn btn-danger js-bookmark-delete" data-id="${bookmark.id}">Delete</button>
-        </div>
+          <p>${bookmark.desc}</p> 
+          <button type="button" class="bookmark-delete" id="${bookmark.id}">Delete</button>
+            <button type ="button" id="edit">Edit</button>
+          </div>
       </div>
     </li> 
     `
   }
-   
-    // return `
-    // <li>
-    //   <div class="divexpand">  
-    
-    //     <div class="divcollapse">
-    //         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"</p>
-    //     </div>
-    //   </div>  
-
-    // </li>
-    // `;
-
-
+ 
     //this creates a page to create a bookmark page
 function generateBookmarkPage() {
     return `
         <div class="container">
-          <div class="box1">
-            <div class="titlediv">
-              <label for="url">Title:</label>
-              <input form="text-update" type="text" id="bookmark-title" name="title">
+          <form id="text-update">
+            <div class="box1">
+              <div class="titlediv">
+                <label for="url">Title:</label>
+                <input form="text-update" type="text" id="bookmark-title" name="title">
+              </div>
+              <div class="urldiv">
+                <label for="url">URL:</label>
+                <input form="text-update" type="text" id="bookmark-url" name="url">
+              </div>
             </div>
-            <div class="urldiv">
-              <label for="url">URL:</label>
-              <input form="text-update" type="text" id="bookmark-url" name="url">
-            </div>
-            </div>
-              <span class="rating" form="text-update">
-                <input type="radio" class="rating-input" id="rating-input-1-5" name="rating-input-1">
-                <label for="rating-input-1-5" class="rating-star"></label>
-                <input type="radio" class="rating-input" id="rating-input-1-4" name="rating-input-1">
-                <label for="rating-input-1-4" class="rating-star"></label>
-                <input type="radio" class="rating-input" id="rating-input-1-3" name="rating-input-1">
-                <label for="rating-input-1-3" class="rating-star"></label>
-                <input type="radio" class="rating-input" id="rating-input-1-2" name="rating-input-1">
-                <label for="rating-input-1-2" class="rating-star"></label>
-                <input type="radio" class="rating-input" id="rating-input-1-1" name="rating-input-1">
-                <label for="rating-input-1-1" class="rating-star"></label>
-              </span>
+            <span class="rating" form="text-update">
+              ${[1, 2, 3, 4, 5].map(function(digit) {
+              return `<input type="radio" class="rating-input" id="rating-input-1-${6-digit}" name="rating-input-1" value ="${digit}">
+              <label for="rating-input-1-${6-digit}" class="rating-star"></label>`;}).join('\n')}
+            </span>
             <div>
               <label for="description">Description:</label>
               <input form="text-update" type="text" id="bookmark-description" name="description">
             </div>
-          <form id="text-update">
+            
             <button class "error-container" type ="submit" id="save">Save</button>
             <button type="button" id="cancel">Cancel</button>
-             </form>`
-}
+          </form>
+        </div>`
 
+}
 function renderError(){
   if (store.error) {
     const el = generateError(store.error);
@@ -100,23 +82,15 @@ function renderError(){
     $('.error-container').empty();
   }
 }
-
 function closeError(){
   $('.error-container').on('click', '#cancel-error', () => {
     store.setError(null);
     renderError();
   });
 }
-
 function render(){
   renderError();
-  $('.bookmark-list').append(generateBookmarksListString(store.bookmarks));
-}
-
-function getItemIdFromElement(bookmarks){
-  return $(bookmarks)
-    .closest('.bookmark-list')
-    .data('item-id');
+  $('.bookmark-list').html(generateBookmarksListString(store.bookmarks));
 }
 
 // this works don't mess with it
@@ -133,7 +107,8 @@ function handleNewBookmarkSubmit(){
     const values = {};
     values.title = $('#bookmark-title').val();
     values.url = $('#bookmark-url').val();
-    values.description = $('#bookmark-description').val();
+    values.desc = $('#bookmark-description').val();
+    values. rating = $('input[name=rating-input-1]:checked', '#text-update').val()
     api.addBookmark(values)
       .then((newBookmark) => {
         store.addBookmark(newBookmark);
@@ -146,17 +121,21 @@ function handleNewBookmarkSubmit(){
       });
   });
 }
-
 function cnacelNewBookmarkSubmit() {
   $('main').on('click', '#cancel', event => {
     event.preventDefault();
     location.reload();
   })
 }
+function getItemIdFromElement(bookmarks){
+  return $(bookmarks)
+    .closest('.bookmark-list')
+    .data('id');
+}
 function handleBookmarkDeleteClicked(){
-  $('.bookmarks-list').on('click', '.bookmark-delete', event => {
-    const id = getItemIdFromElement(event.currentTarget);
-
+  console.log("work")
+  $('.bookmark-list').on('click', '.bookmark-delete', function(){
+    const id = $(this).attr('id');
     api.deleteBookmark(id)
       .then(() => {
         store.findAndDelete(id);
@@ -170,13 +149,12 @@ function handleBookmarkDeleteClicked(){
   });
 }
 
-function handleMinimumRatingFilter(){
-  $('.bookmark-rating-filter').on('change', event => {
-    let rating = $(event.target).val();
-    store.minimumRating = rating;
+const handleFilterByRating = () => {
+  $('#bookmark-rating-filter').on('click', 'input', event => {
+    store.filterRating = parseInt($(event.target).val());
     render();
   });
-}
+};
 
 function expandAccordionOnClick(){
   $('main').on('click', '.divexpand', function(){
@@ -184,14 +162,16 @@ function expandAccordionOnClick(){
   })
 }
 
+
 function bindEventListeners(){
   closeError();
   handleNewPageSubmit();
   handleNewBookmarkSubmit();
   handleBookmarkDeleteClicked();
-  handleMinimumRatingFilter();
+  handleFilterByRating();
   cnacelNewBookmarkSubmit();
   expandAccordionOnClick();
+
 }
 
 
