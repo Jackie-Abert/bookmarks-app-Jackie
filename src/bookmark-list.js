@@ -19,8 +19,8 @@ function render(){
   let bookmarks = store.bookmarks.filter(bookmark => {
     return bookmark.rating >= store.filterRating;
   });
-  $('.bookmark-list').html(generateBookmarksListString(bookmarks));
   $('.sort-button').html(generateSortButton());
+  $('.bookmark-list').html(generateBookmarksListString(bookmarks));
 }
 
 function expandAccordionOnClick(){
@@ -189,7 +189,6 @@ function generateBookmarkElement(bookmark){
         <button class="link"><a data-id="${bookmark.id}" target="_blank" href="${bookmark.url}">Visit Site</a></button>
         <p>${bookmark.desc}</p> 
         <button type="button" class="bookmark-delete" id="${bookmark.id}">Delete</button>
-          <button type ="button" id="edit">Edit</button>
         </div>
     </div>
   </li> 
