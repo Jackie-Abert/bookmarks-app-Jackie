@@ -9,18 +9,14 @@ import bookmarkList from './bookmark-list';
 
 //this is working
 function main(){
-
+  
+  bookmarkList.bindEventListeners();
   api.getBookmarks()
   .then((bookmarks) => {
-    console.log(bookmarks);
     bookmarks.forEach((bookmark) => store.addBookmark(bookmark));
-    console.log(store.bookmarks);
     bookmarkList.render();
   })
   .catch(err => console.log(err.message));
-  
-  bookmarkList.bindEventListeners();
-  bookmarkList.render();
 };
 
 $(main);

@@ -6,73 +6,45 @@ import './index.css';
 import store from './store';
 import api from './api';
 
-  function generateError(message){
-    return `
-      <section class="error-content">
-        <button id="cancel-error">X</button>
-        <p>${message}</p>
-      </section>
-    `;
-  }
-//this puts all the crap together in a string for the dom to read
-  function generateBookmarksListString(bookmarkList){
-    const bookmarks = bookmarkList.map((bookmark) => generateBookmarkElement(bookmark));
-    return bookmarks.join('');
-  }
-//this creates the bookmark elements including the on click expand
-  function generateBookmarkElement(bookmark){
-    console.log("generateBookmarkElement working")
-    return `
-    <li>
-      <div class ="divexpand">
-        <div>
-          <div class="flexcontainer">
-            <div class="flexbox1">${bookmark.title}</div>
-            <div class="flexbox2">${bookmark.rating}</div>
-          </div>
-        </div>
-        <div class="divcollapse">
-          <h2>${bookmark.title}</h2>
-          <a data-id="${bookmark.id}" target="_blank" href="${bookmark.url}">Visit Site</a>
-          <p>${bookmark.desc}</p> 
-          <button type="button" class="bookmark-delete" id="${bookmark.id}">Delete</button>
-            <button type ="button" id="edit">Edit</button>
-          </div>
-      </div>
-    </li> 
-    `
-  }
- 
-    //this creates a page to create a bookmark page
-function generateBookmarkPage() {
-    return `
-        <div class="container">
-          <form id="text-update">
-            <div class="box1">
-              <div class="titlediv">
-                <label for="url">Title:</label>
-                <input form="text-update" type="text" id="bookmark-title" name="title">
-              </div>
-              <div class="urldiv">
-                <label for="url">URL:</label>
-                <input form="text-update" type="text" id="bookmark-url" name="url">
-              </div>
-            </div>
-            <span class="rating" form="text-update">
-              ${[1, 2, 3, 4, 5].map(function(digit) {
-              return `<input type="radio" class="rating-input" id="rating-input-1-${6-digit}" name="rating-input-1" value ="${digit}">
-              <label for="rating-input-1-${6-digit}" class="rating-star"></label>`;}).join('\n')}
-            </span>
-            <div>
-              <label for="description">Description:</label>
-              <input form="text-update" type="text" id="bookmark-description" name="description">
-            </div>
-            
-            <button class "error-container" type ="submit" id="save">Save</button>
-            <button type="button" id="cancel">Cancel</button>
-          </form>
-        </div>`
+const ratingImage = [
+  '/images/stars-1.png',
+  'images/stars-2.png',
+  'images/stars-3.png',
+  '/images/stars-4.png',
+  '/images/stars-5.png'
+]
 
+function render(){
+  renderError();
+  let bookmarks = store.bookmarks.filter(bookmark => {
+    return bookmark.rating >= store.filterRating;
+  });
+  $('.bookmark-list').html(generateBookmarksListString(bookmarks));
+  $('.sort-button').html(generateSortButton());
+}
+
+function expandAccordionOnClick(){
+  $('main').on('click', '.divexpand', function(){
+    $(this).find('.divcollapse').slideToggle('slow');
+  })
+}
+function cnacelNewBookmarkSubmit() {
+  $('main').on('click', '#cancel', event => {
+    event.preventDefault();
+    location.reload();
+  })
+}
+/////////////////////////////////////
+//error error error error error error 
+//error error error error error error 
+//error error error error error error 
+function generateError(message){
+  return `
+    <section class="error-content">
+      <button id="cancel-error">X</button>
+      <p>${message}</p>
+    </section>
+  `;
 }
 function renderError(){
   if (store.error) {
@@ -88,19 +60,24 @@ function closeError(){
     renderError();
   });
 }
-function render(){
-  renderError();
-  $('.bookmark-list').html(generateBookmarksListString(store.bookmarks));
-}
+//error error error error error error 
+//error error error error error error 
+//error error error error error error 
+/////////////////////////////////////
 
-// this works don't mess with it
+/////////////////////////////////////
+
+/////////////////////////////////////
+function generateBookmarksListString(bookmarkList){
+    const bookmarks = bookmarkList.map((bookmark) => generateBookmarkElement(bookmark));
+    return bookmarks.join('');
+}
 function handleNewPageSubmit() {
   $('#newBookmark').on('click', event => {
     $('main').html(generateBookmarkPage())
     event.preventDefault();
   })
 }
-//this submits to the api don't mess with it
 function handleNewBookmarkSubmit(){
   $('main').on('submit', '#text-update', function(event){
     event.preventDefault();
@@ -121,19 +98,12 @@ function handleNewBookmarkSubmit(){
       });
   });
 }
-function cnacelNewBookmarkSubmit() {
-  $('main').on('click', '#cancel', event => {
-    event.preventDefault();
-    location.reload();
-  })
-}
 function getItemIdFromElement(bookmarks){
   return $(bookmarks)
     .closest('.bookmark-list')
     .data('id');
 }
 function handleBookmarkDeleteClicked(){
-  console.log("work")
   $('.bookmark-list').on('click', '.bookmark-delete', function(){
     const id = $(this).attr('id');
     api.deleteBookmark(id)
@@ -149,20 +119,88 @@ function handleBookmarkDeleteClicked(){
   });
 }
 
-const handleFilterByRating = () => {
-  $('#bookmark-rating-filter').on('click', 'input', event => {
-    store.filterRating = parseInt($(event.target).val());
+function handleFilterByRating(){
+  $(".sort-button").on('change', event => {
+    event.preventDefault();
+    let rating = $(event.target).val();
+    store.filterRating = rating;
     render();
+    
   });
 };
+////////////////////////////////////////////////
 
-function expandAccordionOnClick(){
-  $('main').on('click', '.divexpand', function(){
-    $(this).find('.divcollapse').slideToggle('slow');
-  })
+/////////////////////////////////////////////////
+//forms forms forms forms forms forms forms forms
+//forms forms forms forms forms forms forms forms
+//forms forms forms forms forms forms forms forms
+function generateBookmarkPage() {
+  return `
+      <div class="container">
+        <form id="text-update">
+          <div class="box1">
+            <div class="titlediv">
+              <label for="url">Title:</label>
+              <input form="text-update" type="text" id="bookmark-title" name="title">
+            </div>
+            <div class="urldiv">
+              <label for="url">URL:</label>
+              <input form="text-update" type="text" id="bookmark-url" name="url">
+            </div>
+          </div>
+          <span class="rating" form="text-update"><label for="rating">Rating:</label>
+            ${[5, 4, 3, 2, 1].map(function(digit) {
+            return `<input type="radio" class="rating-input" id="rating-input-1-${6-digit}" name="rating-input-1" value ="${digit}">
+            <label for="rating-input-1-${6-digit}" class="rating-star"></label>`;}).join('\n')}
+          </span>
+          <div>
+            <label for="description">Description:</label>
+            <input form="text-update" type="text" id="bookmark-description" name="description">
+          </div>
+            <button class "error-container" type ="submit" id="save">Save</button>
+            <button type="button" id="cancel">Cancel</button>
+        </form>
+      </div>`
+
 }
+function generateSortButton() {
+  return `
+    <select class="main-flex2" id="bookmark-rating-filter">
+      <option value=1 selected="selected">rating</option>
+      <option value=5>5 Stars</option>
+      <option value=4>4 Stars</option>
+      <option value=3>3 Stars</option>
+      <option value=2>2 Stars</option>
+      <option value=1>1 Star</option>
+  </select>`
+}
+function generateBookmarkElement(bookmark){
+  return `
+  <li>
+    <div class ="divexpand">
+      <div>
+        <div class="flexcontainer">
+          <div class="flexbox1">${bookmark.title}</div>
+          <div class="flexbox2" id="${bookmark.rating}"><img src="${ratingImage[bookmark.rating-1]}"><src></div>
+        </div>
+      </div>
+      <div class="divcollapse">
+        <h3>${bookmark.title}</h3>
+        <button class="link"><a data-id="${bookmark.id}" target="_blank" href="${bookmark.url}">Visit Site</a></button>
+        <p>${bookmark.desc}</p> 
+        <button type="button" class="bookmark-delete" id="${bookmark.id}">Delete</button>
+          <button type ="button" id="edit">Edit</button>
+        </div>
+    </div>
+  </li> 
+  `
+}
+//forms forms forms forms forms forms forms forms
+//forms forms forms forms forms forms forms forms
+//forms forms forms forms forms forms forms forms
+/////////////////////////////////////////////////
 
-
+/////////////////////////////////////////////////
 function bindEventListeners(){
   closeError();
   handleNewPageSubmit();
@@ -171,11 +209,12 @@ function bindEventListeners(){
   handleFilterByRating();
   cnacelNewBookmarkSubmit();
   expandAccordionOnClick();
-
+  generateSortButton();
 }
 
 
 export default {
+    ratingImage,
     generateBookmarksListString,
     bindEventListeners,
     render

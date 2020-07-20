@@ -73,3 +73,9 @@ float: right;
   height: 16px;
   background: url(/images/star-01.png) 0 -16px;
 }
+
+
+@media all and (min-width: 600px;) {
+
+  
+}

@@ -1,57 +1,99 @@
-html {
+html, body{
   margin: 0px;
   padding: 0px;
 }
-
-.main-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  border: 1px solid #000000;
-  padding: 5px;
-  margin: 10px;
+main {
 
 }
+header {
+  border: 1px solid #000000;
+  background: #500000;
+  color: #ffffff;
+  padding: 5px;
+  margin: 10px;
+  text-align: center;
+}
+.container {
+  padding: 5px;
+  margin: 0 auto;
+  text-align: center;
+  max-width: 600px;
+}
 
+/*these three are grouped together*/
+.main-container {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 0 auto;
+  max-width: 600px;
+
+}
 .main-flex1 {
   flex: 1;
+  width:100px;
 }
 
 .main-flex2 {
   flex: 1;
+  width:100px;
 }
+/*===================*/
 
-.container {
-  border: 1px solid #000000;
-  padding: 5px;
-  margin: 10px;
-}
+
+/*these three are grouped together*/
 .flexcontainer {
   display: flex;
-  flex-direction: row;
   justify-content: space-evenly;
 }
+
 .flexbox1 {
   flex: 1;
+  text-align: left;
 }
-
 .flexbox2 {
   flex: 1;
+  text-align: right;
 }
+/*==================*/
 
-header {
-  border: 1px solid #000000;
-  padding: 5px;
-  margin: 10px;
-  text-align: center;
-}
 
-#text-update {
+/*buttons buttons buttons*/
+/*buttons buttons buttons*/
+/*buttons buttons buttons*/
+
+.main-flex2, button {
+  padding: 5px 15px;
+  margin-top: 5px;
+  color: #000000;
   border: 1px solid #000000;
-  padding: 5px;
-  margin: 10px;
+  background-color: #ffffff;
   text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  width: 100px;
+  height:35px;
+  box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.2);
 }
+.link {
+  padding: 5px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  width: 120px;
+  height:45px;
+  box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+#bookmark-description {
+  min-height: 100px;
+  min-width: 90%;
+  margin-bottom: 5px;
+}
+a {
+  text-decoration: none;
+}
+/*list styles list styles list styles*/
+/*list styles list styles list styles*/
+/*list styles list styles list styles*/
 ul {
   list-style: none;
   padding-left: 0px;
@@ -61,10 +103,12 @@ li {
   padding: 10px;
   margin: 10px;
   list-style-position: inside;
+  box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.2);
 }
 #nav li > ul {
   display:none;
 }
+
 #description {
   width: 95%;
   min-height: 60px;
@@ -72,6 +116,7 @@ li {
 
 .box1 {
   display: flex;
+  flex-direction: column;
 }
 
 .titlediv {
@@ -84,4 +129,55 @@ li {
 
 .divcollapse {
   display: none;
+}
+
+
+/****IMPORTANT*****/
+/*RATING STYLE DONT MESS WITH THIS
+THIS CHANGEST THE STARS ON HOVER
+Make a note this changes the order 
+of the rating it is backwards make 
+changes accordingly*/
+
+.rating {
+  overflow: hidden;
+  display: inline-block;
+  margin: 10px;
+}
+.rating-input {
+  float: right;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  margin: 0 0 0 -16px;
+  opacity: 0;
+}
+
+.rating:hover .rating-star:hover, .rating:hover .rating-star:hover ~ .rating-star, .rating-input:checked ~ .rating-star {
+  background-position: 0 0;
+}
+
+.rating-star, .rating:hover .rating-star {
+  position: relative;
+  display: block;
+  float: right;
+  width: 16px;
+  height: 16px;
+  background: url(/images/star-01.png) 0 -16px;
+}
+
+/*all the css for monitors and NOT mobile*/
+
+@media all and (min-width: 500px) {
+  
+  .flexcontainer {
+    flex-direction: row;
+  }
+  
+  .main-container {
+      display: row;
+  }
+  .box1 {
+    flex-direction: row;
+  }
 }
