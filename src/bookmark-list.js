@@ -13,7 +13,74 @@ const ratingImage = [
   '/images/stars-4.png',
   '/images/stars-5.png'
 ]
+/////////////////////////////////////////////////
+//forms forms forms forms forms forms forms forms
+//forms forms forms forms forms forms forms forms
+//forms forms forms forms forms forms forms forms
+function generateBookmarkPage() {
+  return `
+      <div class="container">
+        <form id="text-update">
+          <div class="box1">
+            <div class="titlediv">
+              <label for="url">Title:</label>
+              <input form="text-update" type="text" id="bookmark-title" name="title">
+            </div>
+            <div class="urldiv">
+              <label for="url">URL:</label>
+              <input form="text-update" type="text" id="bookmark-url" name="url">
+            </div>
+          </div>
+          <span class="rating" form="text-update"><label for="rating">Rating:</label>
+            ${[5, 4, 3, 2, 1].map(function(digit) {
+            return `<input type="radio" class="rating-input" id="rating-input-1-${6-digit}" name="rating-input-1" value ="${digit}">
+            <label for="rating-input-1-${6-digit}" class="rating-star"></label>`;}).join('\n')}
+          </span>
+          <div>
+            <label for="description">Description:</label>
+            <input form="text-update" type="text" id="bookmark-description" name="description">
+          </div>
+            <button class "error-container" type ="submit" id="save">Save</button>
+            <button type="button" id="cancel">Cancel</button>
+        </form>
+      </div>`
 
+}
+function generateSortButton() {
+  return `
+    <select class="main-flex2" id="bookmark-rating-filter">
+      <option value=1 selected="selected">rating</option>
+      <option value=5>5 Stars</option>
+      <option value=4>4 Stars</option>
+      <option value=3>3 Stars</option>
+      <option value=2>2 Stars</option>
+      <option value=1>1 Star</option>
+  </select>`
+}
+function generateBookmarkElement(bookmark){
+  return `
+  <li>
+    <div class ="divexpand">
+      <div>
+        <div class="flexcontainer">
+          <div class="flexbox1">${bookmark.title}</div>
+          <div class="flexbox2" id="${bookmark.rating}"><img src="${ratingImage[bookmark.rating-1]}"><src></div>
+        </div>
+      </div>
+      <div class="divcollapse">
+        <h3>${bookmark.title}</h3>
+        <button class="link"><a data-id="${bookmark.id}" target="_blank" href="${bookmark.url}">Visit Site</a></button>
+        <p>${bookmark.desc}</p> 
+        <button type="button" class="bookmark-delete" id="${bookmark.id}">Delete</button>
+        </div>
+    </div>
+  </li> 
+  `
+}
+//forms forms forms forms forms forms forms forms
+//forms forms forms forms forms forms forms forms
+//forms forms forms forms forms forms forms forms
+/////////////////////////////////////////////////
 function render(){
   renderError();
   let bookmarks = store.bookmarks.filter(bookmark => {
@@ -130,74 +197,7 @@ function handleFilterByRating(){
 };
 ////////////////////////////////////////////////
 
-/////////////////////////////////////////////////
-//forms forms forms forms forms forms forms forms
-//forms forms forms forms forms forms forms forms
-//forms forms forms forms forms forms forms forms
-function generateBookmarkPage() {
-  return `
-      <div class="container">
-        <form id="text-update">
-          <div class="box1">
-            <div class="titlediv">
-              <label for="url">Title:</label>
-              <input form="text-update" type="text" id="bookmark-title" name="title">
-            </div>
-            <div class="urldiv">
-              <label for="url">URL:</label>
-              <input form="text-update" type="text" id="bookmark-url" name="url">
-            </div>
-          </div>
-          <span class="rating" form="text-update"><label for="rating">Rating:</label>
-            ${[5, 4, 3, 2, 1].map(function(digit) {
-            return `<input type="radio" class="rating-input" id="rating-input-1-${6-digit}" name="rating-input-1" value ="${digit}">
-            <label for="rating-input-1-${6-digit}" class="rating-star"></label>`;}).join('\n')}
-          </span>
-          <div>
-            <label for="description">Description:</label>
-            <input form="text-update" type="text" id="bookmark-description" name="description">
-          </div>
-            <button class "error-container" type ="submit" id="save">Save</button>
-            <button type="button" id="cancel">Cancel</button>
-        </form>
-      </div>`
 
-}
-function generateSortButton() {
-  return `
-    <select class="main-flex2" id="bookmark-rating-filter">
-      <option value=1 selected="selected">rating</option>
-      <option value=5>5 Stars</option>
-      <option value=4>4 Stars</option>
-      <option value=3>3 Stars</option>
-      <option value=2>2 Stars</option>
-      <option value=1>1 Star</option>
-  </select>`
-}
-function generateBookmarkElement(bookmark){
-  return `
-  <li>
-    <div class ="divexpand">
-      <div>
-        <div class="flexcontainer">
-          <div class="flexbox1">${bookmark.title}</div>
-          <div class="flexbox2" id="${bookmark.rating}"><img src="${ratingImage[bookmark.rating-1]}"><src></div>
-        </div>
-      </div>
-      <div class="divcollapse">
-        <h3>${bookmark.title}</h3>
-        <button class="link"><a data-id="${bookmark.id}" target="_blank" href="${bookmark.url}">Visit Site</a></button>
-        <p>${bookmark.desc}</p> 
-        <button type="button" class="bookmark-delete" id="${bookmark.id}">Delete</button>
-        </div>
-    </div>
-  </li> 
-  `
-}
-//forms forms forms forms forms forms forms forms
-//forms forms forms forms forms forms forms forms
-//forms forms forms forms forms forms forms forms
-/////////////////////////////////////////////////
 
 /////////////////////////////////////////////////
 function bindEventListeners(){

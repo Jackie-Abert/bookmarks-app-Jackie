@@ -1,38 +1,38 @@
 'use strict';
-let filter = 1;
-  const setError = function(error) {
-    this.error = error;
-  };
+let filter = 0;
+const setError = function(error) {
+  this.error = error;
+};
 
-  const findById = function(id){
-    return this.bookmarks.find(bookmark => bookmark.id === id);
-  };
-  
-  const addBookmark = function(bookmark){
-    this.bookmarks.push(bookmark);
-  };
+const findById = function(id){
+  return this.bookmarks.find(bookmark => bookmark.id === id);
+};
 
-  const findAndUpdate = function(id, newData){
-    const bookmark = this.findById(id);
-    Object.assign(bookmark, newData);
-  };
+const addBookmark = function(bookmark){
+  this.bookmarks.push(bookmark);
+};
 
-  const findAndDelete = function(id){
-    this.bookmarks = this.bookmarks.filter(currentBookmark => currentBookmark.id !== id);
-  };
-  
-  function filterRating(val) {
-    this.filter = val;
-  }
+const findAndUpdate = function(id, newData){
+  const bookmark = this.findById(id);
+  Object.assign(bookmark, newData);
+};
 
-  export default {
-    bookmarks: [],
-    filter,
-    setError,
-    findById,
-    addBookmark,
-    findAndUpdate,
-    findAndDelete,
-    filterRating
-  };
+const findAndDelete = function(id){
+  this.bookmarks = this.bookmarks.filter(currentBookmark => currentBookmark.id !== id);
+};
+
+function filterRating(val) {
+  this.filter = val;
+}
+
+export default {
+  bookmarks: [],
+  filter = 0,
+  setError,
+  findById,
+  addBookmark,
+  findAndUpdate,
+  findAndDelete,
+  filterRating
+};
 
