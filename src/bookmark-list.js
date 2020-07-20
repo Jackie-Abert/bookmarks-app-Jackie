@@ -13,6 +13,20 @@ const ratingImage = [
   '/images/stars-4.png',
   '/images/stars-5.png'
 ]
+//when this code runs, the filter works and the drop down filters through
+//the rating no problem. When the page loads, nothing shows up and
+//I can NOT figure out why. NEED to solve this.
+function render(){
+  renderError();
+  let bookmarks = store.bookmarks.filter(bookmark => {
+    return bookmark.rating >= store.filterRating;
+  });
+  $('.sort-button').html(generateSortButton());
+  $('.bookmark-list').html(generateBookmarksListString(bookmarks));
+}
+
+
+
 /////////////////////////////////////////////////
 //forms forms forms forms forms forms forms forms
 //forms forms forms forms forms forms forms forms
@@ -80,14 +94,6 @@ function generateBookmarkElement(bookmark){
 //forms forms forms forms forms forms forms forms
 //forms forms forms forms forms forms forms forms
 /////////////////////////////////////////////////
-function render(){
-  renderError();
-  let bookmarks = store.bookmarks.filter(bookmark => {
-    return bookmark.rating >= store.filterRating;
-  });
-  $('.sort-button').html(generateSortButton());
-  $('.bookmark-list').html(generateBookmarksListString(bookmarks));
-}
 
 function expandAccordionOnClick(){
   $('main').on('click', '.divexpand', function(){
@@ -184,7 +190,9 @@ function handleBookmarkDeleteClicked(){
       });
   });
 }
-
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+///////////////////////////////////////////////
 function handleFilterByRating(){
   $(".sort-button").on('change', event => {
     event.preventDefault();
@@ -195,7 +203,8 @@ function handleFilterByRating(){
   });
 };
 ////////////////////////////////////////////////
-
+////////////////////////////////////////////////
+////////////////////////////////////////////////
 
 
 /////////////////////////////////////////////////
