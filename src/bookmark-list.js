@@ -68,7 +68,6 @@ function generateBookmarkElement(bookmark){
         </div>
       </div>
       <div class="divcollapse">
-        <h3>${bookmark.title}</h3>
         <button class="link"><a data-id="${bookmark.id}" target="_blank" href="${bookmark.url}">Visit Site</a></button>
         <p>${bookmark.desc}</p> 
         <button type="button" class="bookmark-delete" id="${bookmark.id}">Delete</button>
@@ -209,6 +208,7 @@ function bindEventListeners(){
   cnacelNewBookmarkSubmit();
   expandAccordionOnClick();
   generateSortButton();
+  getItemIdFromElement();
 }
 
 

@@ -1,5 +1,4 @@
 'use strict';
-let filter = 0;
 const setError = function(error) {
   this.error = error;
 };
@@ -27,7 +26,7 @@ function filterRating(val) {
 
 export default {
   bookmarks: [],
-  filter = 0,
+  filter: 0,
   setError,
   findById,
   addBookmark,
