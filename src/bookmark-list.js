@@ -54,7 +54,7 @@ function generateBookmarkPage() {
             <label for="description">Description:</label>
             <input form="text-update" type="text" id="bookmark-description" name="description">
           </div>
-            <button class "error-container" type ="submit" id="save">Save</button>
+            <button class"error-container" type ="submit" id="save">Save</button>
             <button type="button" id="cancel">Cancel</button>
         </form>
       </div>`
@@ -121,15 +121,15 @@ function generateError(message){
 function renderError(){
   if (store.error) {
     const el = generateError(store.error);
-    $('.error-container').html(el);
-  } else {
-    $('.error-container').empty();
+    alert("Please fill out entire form.")
   }
 }
 function closeError(){
-  $('.error-container').on('click', '#cancel-error', () => {
+  $('main').on('click', '#cancel-error', () => {
+    event.preventDefault();
     store.setError(null);
     renderError();
+    generateBookmarkPage();
   });
 }
 //error error error error error error 
