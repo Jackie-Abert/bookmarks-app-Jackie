@@ -1,6 +1,6 @@
 'use strict';
 let bookmarks = [];
-let filter = 0;
+let minRating = 0;
 let error = null;
 
 
@@ -33,7 +33,7 @@ const findAndDelete = function(id){
 ////////////////////////////////////////////////
 export default {
   bookmarks,
-  filter,
+  minRating,
   error,
   setError,
   findById,

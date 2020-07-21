@@ -137,9 +137,6 @@ function closeError(){
     event.preventDefault();
     store.setError(null);
     renderError();
-    handleNewPageSubmit();
-    console.log('rendering')
-
   });
 }
 //error error error error error error 
