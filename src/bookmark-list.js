@@ -60,7 +60,7 @@ function generateBookmarkPage() {
             <label for="description">Description:</label>
             <input form="text-update" type="text" id="bookmark-description" name="description">
           </div>
-            <button class"error-container" type ="submit" id="save">Save</button>
+            <button class="error-container" type ="submit" id="save">Save</button>
             <button type="button" id="cancel">Cancel</button>
         </form>
       </div>`
@@ -116,8 +116,6 @@ function cnacelNewBookmarkSubmit() {
 //error error error error error error 
 //error error error error error error 
 //error error error error error error 
-//need to make these functions actually work but for 
-//now user gets an error message stating forms are empty
 function generateError(message){
   return `
     <section class="error-content">
@@ -129,7 +127,9 @@ function generateError(message){
 function renderError(){
   if (store.error) {
     const el = generateError(store.error);
-    alert("Please fill out entire form.")
+    $('.error-container').html(el);
+  } else {
+    $('.error-container').empty();
   }
 }
 function closeError(){
@@ -137,7 +137,9 @@ function closeError(){
     event.preventDefault();
     store.setError(null);
     renderError();
-    generateBookmarkPage();
+    handleNewPageSubmit();
+    console.log('rendering')
+
   });
 }
 //error error error error error error 
