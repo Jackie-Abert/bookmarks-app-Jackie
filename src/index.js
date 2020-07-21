@@ -11,11 +11,10 @@ import bookmarkList from './bookmark-list';
 function main(){
   
   bookmarkList.bindEventListeners();
+  bookmarkList.render();
   api.getBookmarks()
   .then((bookmarks) => {
     bookmarks.forEach((bookmark) => store.addBookmark(bookmark));
-    bookmarkList.render();
-    
   })
   .catch(err => console.log(err.message));
 };

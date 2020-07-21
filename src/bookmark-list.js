@@ -17,12 +17,14 @@ const ratingImage = [
 //the rating no problem. When the page loads, nothing shows up and
 //I can NOT figure out why. NEED to solve this.
 function render(){
+  console.log('im rendering')
   renderError();
   let bookmarks = store.bookmarks.filter(bookmark => {
     return bookmark.rating >= store.filterRating;
   });
-  $('.sort-button').html(generateSortButton());
   $('.bookmark-list').html(generateBookmarksListString(bookmarks));
+  console.log(bookmarks)
+  $('.sort-button').html(generateSortButton());
 }
 
 
@@ -110,6 +112,8 @@ function cnacelNewBookmarkSubmit() {
 //error error error error error error 
 //error error error error error error 
 //error error error error error error 
+//need to make these functions actually work but for 
+//now user gets an error message stating forms are empty
 function generateError(message){
   return `
     <section class="error-content">
@@ -121,7 +125,6 @@ function generateError(message){
 function renderError(){
   if (store.error) {
     const el = generateError(store.error);
-    alert("Please fill out entire form.")
   }
 }
 function closeError(){

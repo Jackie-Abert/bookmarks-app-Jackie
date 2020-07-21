@@ -19,11 +19,13 @@ const findAndUpdate = function(id, newData){
 const findAndDelete = function(id){
   this.bookmarks = this.bookmarks.filter(currentBookmark => currentBookmark.id !== id);
 };
-
+////////////////////////////////////////////////
+////////////////////////////////////////////////
 function filterRating(val) {
   this.filter = val;
 }
-
+////////////////////////////////////////////////
+////////////////////////////////////////////////
 export default {
   bookmarks: [],
   filter: 0,
