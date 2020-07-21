@@ -1,4 +1,9 @@
 'use strict';
+let bookmarks = [];
+let filter = 0;
+let error = null;
+
+
 const setError = function(error) {
   this.error = error;
 };
@@ -21,19 +26,19 @@ const findAndDelete = function(id){
 };
 ////////////////////////////////////////////////
 ////////////////////////////////////////////////
-function filterRating(val) {
-  this.filter = val;
-}
+
+
+
 ////////////////////////////////////////////////
 ////////////////////////////////////////////////
 export default {
-  bookmarks: [],
-  filter: 0,
+  bookmarks,
+  filter,
+  error,
   setError,
   findById,
   addBookmark,
   findAndUpdate,
   findAndDelete,
-  filterRating
 };
 

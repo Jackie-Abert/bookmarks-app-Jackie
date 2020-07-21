@@ -13,18 +13,22 @@ const ratingImage = [
   '/images/stars-4.png',
   '/images/stars-5.png'
 ]
-//when this code runs, the filter works and the drop down filters through
-//the rating no problem. When the page loads, nothing shows up and
-//I can NOT figure out why. NEED to solve this.
+
 function render(){
-  console.log('im rendering')
   renderError();
-  let bookmarks = store.bookmarks.filter(bookmark => {
-    return bookmark.rating >= store.filterRating;
-  });
-  $('.bookmark-list').html(generateBookmarksListString(bookmarks));
-  console.log(bookmarks)
-  $('.sort-button').html(generateSortButton());
+  let rating = 0;
+  let bookmarks = store.bookmarks;
+  console.log(rating)
+  if (store.minRating > rating) {
+    bookmarks = store.bookmarks.filter(bookmark => {
+        return bookmark.rating == store.minRating;
+      });
+      $('.sort-button').html(generateSortButton());
+      $('.bookmark-list').html(generateBookmarksListString(bookmarks));  
+  } else {
+    $('.sort-button').html(generateSortButton());
+      $('.bookmark-list').html(generateBookmarksListString(bookmarks));
+  }
 }
 
 
@@ -65,7 +69,7 @@ function generateBookmarkPage() {
 function generateSortButton() {
   return `
     <select class="main-flex2" id="bookmark-rating-filter">
-      <option value=1 selected="selected">rating</option>
+      <option value=0 selected="selected">rating</option>
       <option value=5>5 Stars</option>
       <option value=4>4 Stars</option>
       <option value=3>3 Stars</option>
@@ -125,6 +129,7 @@ function generateError(message){
 function renderError(){
   if (store.error) {
     const el = generateError(store.error);
+    alert("Please fill out entire form.")
   }
 }
 function closeError(){
@@ -199,10 +204,8 @@ function handleBookmarkDeleteClicked(){
 function handleFilterByRating(){
   $(".sort-button").on('change', event => {
     event.preventDefault();
-    let rating = $(event.target).val();
-    store.filterRating = rating;
+    store.minRating = $(event.target).val();
     render();
-    
   });
 };
 ////////////////////////////////////////////////
