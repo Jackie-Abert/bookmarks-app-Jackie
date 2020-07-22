@@ -5,13 +5,19 @@ import 'normalize.css';
 import './index.css';
 import store from './store';
 import api from './api';
+import stars1 from './images/stars-1.png';
+import stars2 from './images/stars-2.png';
+import stars3 from './images/stars-3.png';
+import stars4 from './images/stars-4.png';
+import stars5 from './images/stars-5.png';
+
 
 const ratingImage = [
-  'images/stars-1.png',
-  'images/stars-2.png',
-  'images/stars-3.png',
-  'images/stars-4.png',
-  'images/stars-5.png'
+  stars1,
+  stars2,
+  stars3,
+  stars4,
+  stars5
 ]
 
 function render(){
