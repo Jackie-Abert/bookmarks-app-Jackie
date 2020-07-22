@@ -1,10 +1,10 @@
 'use strict';
 import $ from 'jquery';
 import 'normalize.css';
-import './index.css';
-import api from './api';
-import store from './store';
-import bookmarkList from './bookmark-list';
+import './src/index.css';
+import api from './src/api';
+import store from './src/store';
+import bookmarkList from './src/bookmark-list';
 
 
 //this is working
