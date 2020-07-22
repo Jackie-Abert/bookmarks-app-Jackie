@@ -161,7 +161,7 @@ changes accordingly*/
   float: right;
   width: 16px;
   height: 16px;
-  background: url(/images/star-01.png) 0 -16px;
+  background: url(images/star-01.png) 0 -16px;
 }
 
 /*all the css for monitors and NOT mobile*/
