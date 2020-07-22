@@ -8,7 +8,7 @@ module.exports = {
     mode: 'development',
     plugins: [
       new HtmlWebpackPlugin({
-        template: './src/index.html',
+        template: './index.html',
       })
     ],
     module: {
