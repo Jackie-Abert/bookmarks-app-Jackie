@@ -17,7 +17,7 @@
   "bugs": {
     "url": "https://github.com/Jackie-Abert/bookmarks-app-Jackie/issues"
   },
-  "homepage": "https://github.com/Jackie-Abert/bookmarks-app-Jackie#readme",
+  "homepage": "https://github.com/Jackie-Abert/bookmarks-app-Jackie",
   "dependencies": {
     "jquery": "^3.5.1"
   },
