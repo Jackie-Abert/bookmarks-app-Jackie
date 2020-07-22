@@ -8,8 +8,8 @@ import api from './api';
 
 const ratingImage = [
   '/images/stars-1.png',
-  'images/stars-2.png',
-  'images/stars-3.png',
+  '/images/stars-2.png',
+  '/images/stars-3.png',
   '/images/stars-4.png',
   '/images/stars-5.png'
 ]
