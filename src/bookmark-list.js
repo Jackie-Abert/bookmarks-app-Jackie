@@ -29,20 +29,14 @@ function render(){
     bookmarks = store.bookmarks.filter(bookmark => {
         return bookmark.rating == store.minRating;
       });
-      $('.sort-button').html(generateSortButton());
+      $('main').html(generatePage());
       $('.bookmark-list').html(generateBookmarksListString(bookmarks));  
   } else {
-    $('.sort-button').html(generateSortButton());
+    $('main').html(generatePage());
       $('.bookmark-list').html(generateBookmarksListString(bookmarks));
   }
 }
 
-
-
-/////////////////////////////////////////////////
-//forms forms forms forms forms forms forms forms
-//forms forms forms forms forms forms forms forms
-//forms forms forms forms forms forms forms forms
 function generateBookmarkPage() {
   return `
       <div class="container">
@@ -69,20 +63,37 @@ function generateBookmarkPage() {
             <button class="error-container" type ="submit" id="save">Save</button>
             <button type="button" id="cancel">Cancel</button>
         </form>
-      </div>`
+      </div>
+    `
+}
 
-}
-function generateSortButton() {
+function generatePage() {
   return `
-    <select class="main-flex2" id="bookmark-rating-filter">
-      <option value=0 selected="selected">rating</option>
-      <option value=5>5 Stars</option>
-      <option value=4>4 Stars</option>
-      <option value=3>3 Stars</option>
-      <option value=2>2 Stars</option>
-      <option value=1>1 Star</option>
-  </select>`
+    <section>
+      <form class="main-container">
+        <div>
+          <button class=" main-flex1" type ="button" id="newBookmark">New</button>
+        </div>
+        <div class="sort-button">
+          <select class="main-flex2" id="bookmark-rating-filter">
+            <label name="Filter"><option value=0 selected="selected">Filter</option></label>
+            <label name="five stars"><option value=5>5 Stars</option></label>
+            <label name="four stars"><option value=4>4 Stars</option></label>
+            <label name="three stars"><option value=3>3 Stars</option></label>
+            <label name="two stars"><option value=2>2 Stars</option></label>
+            <label name="one star"><option value=1>1 Star</option></label>
+            <label name="All"><option value=0>All</option></label>
+          </select>
+        </div>
+      </form>
+    </section>
+    <section class="container">
+      <ul class="bookmark-list">
+      </ul>
+    </section>
+  `
 }
+
 function generateBookmarkElement(bookmark){
   return `
   <li>
@@ -90,7 +101,7 @@ function generateBookmarkElement(bookmark){
       <div>
         <div class="flexcontainer">
           <div class="flexbox1">${bookmark.title}</div>
-          <div class="flexbox2" id="${bookmark.rating}"><img src="${ratingImage[bookmark.rating-1]}"><src></div>
+          <div class="flexbox2" id="${bookmark.rating}"><img src="${ratingImage[bookmark.rating-1]}" alt="Star image ${[bookmark.rating]}"><src></div>
         </div>
       </div>
       <div class="divcollapse">
@@ -102,26 +113,19 @@ function generateBookmarkElement(bookmark){
   </li> 
   `
 }
-//forms forms forms forms forms forms forms forms
-//forms forms forms forms forms forms forms forms
-//forms forms forms forms forms forms forms forms
-/////////////////////////////////////////////////
 
 function expandAccordionOnClick(){
   $('main').on('click', '.divexpand', function(){
     $(this).find('.divcollapse').slideToggle('slow');
   })
 }
-function cnacelNewBookmarkSubmit() {
+function cancelNewBookmarkSubmit() {
   $('main').on('click', '#cancel', event => {
     event.preventDefault();
     location.reload();
   })
 }
 /////////////////////////////////////
-//error error error error error error 
-//error error error error error error 
-//error error error error error error 
 function generateError(message){
   return `
     <section class="error-content">
@@ -130,6 +134,7 @@ function generateError(message){
     </section>
   `;
 }
+
 function renderError(){
   if (store.error) {
     const el = generateError(store.error);
@@ -138,6 +143,7 @@ function renderError(){
     $('.error-container').empty();
   }
 }
+
 function closeError(){
   $('main').on('click', '#cancel-error', () => {
     event.preventDefault();
@@ -145,24 +151,20 @@ function closeError(){
     renderError();
   });
 }
-//error error error error error error 
-//error error error error error error 
-//error error error error error error 
-/////////////////////////////////////
-
-/////////////////////////////////////
 
 /////////////////////////////////////
 function generateBookmarksListString(bookmarkList){
     const bookmarks = bookmarkList.map((bookmark) => generateBookmarkElement(bookmark));
     return bookmarks.join('');
 }
+
 function handleNewPageSubmit() {
-  $('#newBookmark').on('click', event => {
+  $('main').on('click','#newBookmark', event => {
     $('main').html(generateBookmarkPage())
     event.preventDefault();
   })
 }
+
 function handleNewBookmarkSubmit(){
   $('main').on('submit', '#text-update', function(event){
     event.preventDefault();
@@ -183,13 +185,15 @@ function handleNewBookmarkSubmit(){
       });
   });
 }
+
 function getItemIdFromElement(bookmarks){
   return $(bookmarks)
     .closest('.bookmark-list')
     .data('id');
 }
+
 function handleBookmarkDeleteClicked(){
-  $('.bookmark-list').on('click', '.bookmark-delete', function(){
+  $('main').on('click', '.bookmark-delete', function(){
     const id = $(this).attr('id');
     api.deleteBookmark(id)
       .then(() => {
@@ -204,20 +208,13 @@ function handleBookmarkDeleteClicked(){
   });
 }
 ////////////////////////////////////////////////
-////////////////////////////////////////////////
-///////////////////////////////////////////////
 function handleFilterByRating(){
-  $(".sort-button").on('change', event => {
+  $('main').on('change',".sort-button", event => {
     event.preventDefault();
     store.minRating = $(event.target).val();
     render();
   });
 };
-////////////////////////////////////////////////
-////////////////////////////////////////////////
-////////////////////////////////////////////////
-
-
 /////////////////////////////////////////////////
 function bindEventListeners(){
   closeError();
@@ -225,9 +222,9 @@ function bindEventListeners(){
   handleNewBookmarkSubmit();
   handleBookmarkDeleteClicked();
   handleFilterByRating();
-  cnacelNewBookmarkSubmit();
+  cancelNewBookmarkSubmit();
   expandAccordionOnClick();
-  generateSortButton();
+  generatePage();
   getItemIdFromElement();
 }
 

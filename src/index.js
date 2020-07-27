@@ -7,9 +7,7 @@ import store from './store';
 import bookmarkList from './bookmark-list';
 
 
-//this is working
 function main(){
-  
   bookmarkList.bindEventListeners();
   api.getBookmarks()
   .then((bookmarks) => {
